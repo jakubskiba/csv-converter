@@ -1,3 +1,5 @@
+package com.codecool;
+
 import java.io.File;
 
 public class FileReader {

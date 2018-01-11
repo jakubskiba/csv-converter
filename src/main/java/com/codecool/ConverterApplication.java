@@ -1,5 +1,6 @@
+package com.codecool;
+
 import java.io.File;
-import java.util.Arrays;
 
 public class ConverterApplication {
     public static void main(String[] args) {

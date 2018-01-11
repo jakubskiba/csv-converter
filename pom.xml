@@ -30,7 +30,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ConverterApplication</mainClass>
+                            <mainClass>com.codecool.ConverterApplication</mainClass>
                         </manifest>
                     </archive>
 
