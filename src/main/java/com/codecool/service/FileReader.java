@@ -3,10 +3,28 @@ package com.codecool.service;
 import com.codecool.model.CsvContainer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
 
 public class FileReader {
-    public CsvContainer readData(File file) {
-        System.out.println("reading data");
-        return null;
+    private List<String> lines;
+    public CsvContainer readData(File file) throws IOException {
+        this.lines = new LinkedList<>();
+        if (file.exists() && file.canRead()) {
+            loadLines(new Scanner(file));
+        } else {
+            throw new FileNotFoundException(file.getPath());
+        }
+
+        return new CsvParser().parse(this.lines);
+    }
+
+    private void loadLines(Scanner scanner) {
+        while (scanner.hasNextLine()) {
+            lines.add(scanner.nextLine());
+        }
     }
 }
