@@ -8,7 +8,7 @@ public class ConverterApplication {
             System.err.println("No input file defined!");
         } else {
             ParsedArguments parsedArguments = parseArgs(args);
-            SimpleCsvConverter simpleCsvConverter = new SimpleCsvConverter();
+            SimpleCsvConverter simpleCsvConverter = new SimpleCsvConverter(new FileReader());
             simpleCsvConverter.convert(parsedArguments.file, parsedArguments.outputFormat);
         }
 
