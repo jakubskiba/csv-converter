@@ -1,5 +1,7 @@
 package com.codecool;
 
+import com.codecool.view.OutputFormatter;
+
 import java.io.File;
 
 public class ConverterApplication {
@@ -8,7 +10,7 @@ public class ConverterApplication {
             System.err.println("No input file defined!");
         } else {
             ParsedArguments parsedArguments = parseArgs(args);
-            SimpleCsvConverter simpleCsvConverter = new SimpleCsvConverter(new FileReader());
+            SimpleCsvConverter simpleCsvConverter = new SimpleCsvConverter(new FileReader(), new OutputFormatterFactory());
             simpleCsvConverter.convert(parsedArguments.file, parsedArguments.outputFormat);
         }
 
