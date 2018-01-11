@@ -1,6 +1,6 @@
-package view;
+package com.codecool.view;
 
-import view.OutputFormatter;
+import com.codecool.CsvContainer;
 
 public class XmlOutputFormatter implements OutputFormatter {
     @Override
