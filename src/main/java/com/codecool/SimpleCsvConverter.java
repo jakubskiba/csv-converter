@@ -1,5 +1,7 @@
 package com.codecool;
 
+import com.codecool.view.OutputFormatter;
+
 import java.io.File;
 
 public class SimpleCsvConverter {
@@ -20,7 +22,8 @@ public class SimpleCsvConverter {
     }
 
     public void convert(File file, OutputFormat outputFormat) {
-        this.outputFormatterFactory.createByFormat(outputFormat);
-        System.out.println("I convert CSV to output format");
+        OutputFormatter outputFormatter = this.outputFormatterFactory.createByFormat(outputFormat);
+        CsvContainer csvContainer = this.fileReader.readData(file);
+        outputFormatter.printToConsole(csvContainer);
     }
 }
