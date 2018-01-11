@@ -1,6 +1,6 @@
 package com.codecool.view;
 
-import com.codecool.CsvContainer;
+import com.codecool.model.CsvContainer;
 
 public class JsonOutputFormatter implements OutputFormatter {
     @Override

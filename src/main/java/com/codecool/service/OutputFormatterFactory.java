@@ -1,5 +1,6 @@
-package com.codecool;
+package com.codecool.service;
 
+import com.codecool.model.OutputFormat;
 import com.codecool.view.JsonOutputFormatter;
 import com.codecool.view.OutputFormatter;
 import com.codecool.view.TableOutputFormatter;

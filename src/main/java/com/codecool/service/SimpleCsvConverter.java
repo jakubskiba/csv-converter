@@ -1,5 +1,7 @@
-package com.codecool;
+package com.codecool.service;
 
+import com.codecool.model.OutputFormat;
+import com.codecool.model.CsvContainer;
 import com.codecool.view.OutputFormatter;
 
 import java.io.File;

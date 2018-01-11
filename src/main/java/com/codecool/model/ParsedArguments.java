@@ -1,10 +1,10 @@
-package com.codecool;
+package com.codecool.model;
 
 import java.io.File;
 
 public class ParsedArguments {
-    OutputFormat outputFormat;
-    File file;
+    private OutputFormat outputFormat;
+    private File file;
 
     public ParsedArguments(OutputFormat outputFormat, File file) {
         this.outputFormat = outputFormat;

@@ -1,4 +1,6 @@
-package com.codecool;
+package com.codecool.service;
+
+import com.codecool.model.CsvContainer;
 
 import java.io.File;
 

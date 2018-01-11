@@ -1,6 +1,10 @@
 package com.codecool;
 
-import com.codecool.view.OutputFormatter;
+import com.codecool.model.OutputFormat;
+import com.codecool.model.ParsedArguments;
+import com.codecool.service.FileReader;
+import com.codecool.service.OutputFormatterFactory;
+import com.codecool.service.SimpleCsvConverter;
 
 import java.io.File;
 
@@ -11,7 +15,7 @@ public class ConverterApplication {
         } else {
             ParsedArguments parsedArguments = parseArgs(args);
             SimpleCsvConverter simpleCsvConverter = new SimpleCsvConverter(new FileReader(), new OutputFormatterFactory());
-            simpleCsvConverter.convert(parsedArguments.file, parsedArguments.outputFormat);
+            simpleCsvConverter.convert(parsedArguments.getFile(), parsedArguments.getOutputFormat());
         }
 
     }
