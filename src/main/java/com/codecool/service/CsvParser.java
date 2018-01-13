@@ -1,9 +1,11 @@
 package com.codecool.service;
 
-import java.util.ArrayList;
+import com.codecool.model.CsvContainer;
+
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class CsvParser {
     private Boolean hasHeader;
@@ -18,14 +20,19 @@ public class CsvParser {
         this.delimiter = delimiter;
     }
 
-    public List<String[]> parse (List<String> lines) {
-        List<String[]> data = new ArrayList<>();
+    public CsvContainer parse (List<String> lines) {
+        List<String> headers = new LinkedList<>();
+        List<String[]> rows = new LinkedList<>();
+        Iterator<String> iterator = lines.iterator();
 
-        for(String line : lines) {
-            data.add(line.split(delimiter));
+        if(hasHeader) {
+            headers = Arrays.asList(iterator.next().split(delimiter));
         }
 
-        return data;
+        iterator.forEachRemaining(line -> rows.add(line.split(delimiter)));
+
+        return new CsvContainer(rows, headers);
     }
+
 
 }

@@ -1,10 +1,13 @@
 package com.codecool.service;
 
+import com.codecool.model.CsvContainer;
 import com.codecool.model.OutputFormat;
+import com.codecool.model.ParsedArguments;
 import com.codecool.view.OutputFormatter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleCsvConverter {
@@ -20,18 +23,11 @@ public class SimpleCsvConverter {
         return fileReader;
     }
 
-    public void convert(File file) {
-        convert(file, OutputFormat.TABLE);
-    }
-
-    public void convert(File file, OutputFormat outputFormat) {
-        OutputFormatter outputFormatter = this.outputFormatterFactory.createByFormat(outputFormat);
-        try {
-            List<String[]> data = this.fileReader.readData(file);
-            outputFormatter.printToConsole(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    public void convert(ParsedArguments parsedArguments) throws IOException {
+        OutputFormatter outputFormatter = this.outputFormatterFactory.createByFormat(parsedArguments.getOutputFormat());
+        Boolean hasHeaders = parsedArguments.getOthersArguments().contains("-headers");
+        CsvParser csvParser = new CsvParser(hasHeaders, ",");
+        CsvContainer csvContainer = csvParser.parse(fileReader.readData(parsedArguments.getFile()));
+        outputFormatter.printToConsole(csvContainer);
     }
 }
