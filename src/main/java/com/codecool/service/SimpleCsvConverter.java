@@ -1,11 +1,11 @@
 package com.codecool.service;
 
 import com.codecool.model.OutputFormat;
-import com.codecool.model.CsvContainer;
 import com.codecool.view.OutputFormatter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class SimpleCsvConverter {
     private FileReader fileReader;
@@ -27,8 +27,8 @@ public class SimpleCsvConverter {
     public void convert(File file, OutputFormat outputFormat) {
         OutputFormatter outputFormatter = this.outputFormatterFactory.createByFormat(outputFormat);
         try {
-            CsvContainer csvContainer = this.fileReader.readData(file);
-            outputFormatter.printToConsole(csvContainer);
+            List<String[]> data = this.fileReader.readData(file);
+            outputFormatter.printToConsole(data);
         } catch (IOException e) {
             e.printStackTrace();
         }

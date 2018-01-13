@@ -1,13 +1,9 @@
 package com.codecool.service;
 
-import com.codecool.model.CsvContainer;
-import com.codecool.model.CsvRow;
-
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class CsvParser {
     private Boolean hasHeader;
@@ -22,21 +18,14 @@ public class CsvParser {
         this.delimiter = delimiter;
     }
 
-    public CsvContainer parse(List<String> lines) {
-        CsvContainer csvContainer = new CsvContainer();
+    public List<String[]> parse (List<String> lines) {
+        List<String[]> data = new ArrayList<>();
 
-        for (int i = 0; i < lines.size(); i++) {
-            List<String> splitLine = splitLine(lines.get(i));
-            Consumer<List<String>> lineConsumer = this.hasHeader && i == 0 ? csvContainer::setHeaders : csvContainer::createRow;
-            lineConsumer.accept(splitLine);
+        for(String line : lines) {
+            data.add(line.split(delimiter));
         }
 
-        return csvContainer;
+        return data;
     }
-
-    private List<String> splitLine(String line) {
-        return Arrays.asList(line.split(delimiter));
-    }
-
 
 }
