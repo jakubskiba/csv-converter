@@ -1,10 +1,12 @@
 package com.codecool.view;
 
+import com.codecool.model.CsvContainer;
+
 import java.util.List;
 
 public class JsonOutputFormatter implements OutputFormatter {
     @Override
-    public void printToConsole(List<String[]> data) {
+    public void printToConsole(CsvContainer csvContainer) {
         System.out.println("print json");
     }
 }

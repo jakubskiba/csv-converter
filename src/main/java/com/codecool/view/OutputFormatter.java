@@ -1,7 +1,9 @@
 package com.codecool.view;
 
+import com.codecool.model.CsvContainer;
+
 import java.util.List;
 
 public interface OutputFormatter {
-    void printToConsole(List<String[]> data);
+    void printToConsole(CsvContainer csvContainer);
 }
