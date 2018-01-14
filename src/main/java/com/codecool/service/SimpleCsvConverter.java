@@ -1,13 +1,13 @@
 package com.codecool.service;
 
 import com.codecool.model.CsvContainer;
-import com.codecool.model.OutputFormat;
 import com.codecool.model.ParsedArguments;
 import com.codecool.view.OutputFormatter;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SimpleCsvConverter {
@@ -19,15 +19,27 @@ public class SimpleCsvConverter {
         this.outputFormatterFactory = outputFormatterFactory;
     }
 
-    public FileReader getFileReader() {
-        return fileReader;
+    public void convert(ParsedArguments parsedArguments) throws FileNotFoundException {
+        OutputFormatter outputFormatter = this.outputFormatterFactory.createByFormat(parsedArguments.getOutputFormat());
+
+        List<String> lines = fileReader.readData(parsedArguments.getFile());
+
+        CsvContainer csvContainer = parse(lines, parsedArguments.hasHeaders(), parsedArguments.getDelimiter());
+
+        outputFormatter.printToConsole(csvContainer);
     }
 
-    public void convert(ParsedArguments parsedArguments) throws IOException {
-        OutputFormatter outputFormatter = this.outputFormatterFactory.createByFormat(parsedArguments.getOutputFormat());
-        Boolean hasHeaders = parsedArguments.getOthersArguments().contains("-headers");
-        CsvParser csvParser = new CsvParser(hasHeaders, ",");
-        CsvContainer csvContainer = csvParser.parse(fileReader.readData(parsedArguments.getFile()));
-        outputFormatter.printToConsole(csvContainer);
+    public CsvContainer parse (List<String> lines, Boolean hasHeaders, String delimiter) {
+        List<String> headers = new LinkedList<>();
+        List<String[]> rows = new LinkedList<>();
+        Iterator<String> iterator = lines.iterator();
+
+        if(hasHeaders) {
+            headers = Arrays.asList(iterator.next().split(delimiter));
+        }
+
+        iterator.forEachRemaining(line -> rows.add(line.split(delimiter)));
+
+        return new CsvContainer(rows, headers);
     }
 }
