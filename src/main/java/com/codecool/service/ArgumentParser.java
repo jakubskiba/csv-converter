@@ -1,6 +1,6 @@
 package com.codecool.service;
 
-import com.codecool.exceptions.InvalidArgumentsSyntax;
+import com.codecool.exceptions.InvalidArgumentsSyntaxException;
 import com.codecool.model.OutputFormat;
 import com.codecool.model.ParsedArguments;
 
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArgumentParser {
-    public ParsedArguments parseArgs(List<String> args) throws InvalidArgumentsSyntax {
+    public ParsedArguments parseArgs(List<String> args) throws InvalidArgumentsSyntaxException {
         OutputFormat outputFormat;
         File file;
         List<String> otherArguments;
@@ -18,7 +18,7 @@ public class ArgumentParser {
 
         switch (args.size()) {
             case 0:
-                throw new InvalidArgumentsSyntax("No input file defined!");
+                throw new InvalidArgumentsSyntaxException("No input file defined!");
             case 1:
                 outputFormat = OutputFormat.TABLE;
                 file = getFile(args.get(0));
