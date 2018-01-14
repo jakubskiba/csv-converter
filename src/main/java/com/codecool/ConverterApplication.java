@@ -1,6 +1,6 @@
 package com.codecool;
 
-import com.codecool.exceptions.InvalidArgumentsSyntaxException;
+import com.codecool.exceptions.ArgumentsSyntaxException;
 import com.codecool.model.ParsedArguments;
 import com.codecool.service.ArgumentParser;
 import com.codecool.service.SimpleCsvConverter;
@@ -21,7 +21,7 @@ public class ConverterApplication {
 
             simpleCsvConverter.convert(parsedArguments);
 
-        } catch (FileNotFoundException | InvalidArgumentsSyntaxException e) {
+        } catch (FileNotFoundException | ArgumentsSyntaxException e) {
             System.err.println(e.getMessage());
         }
 

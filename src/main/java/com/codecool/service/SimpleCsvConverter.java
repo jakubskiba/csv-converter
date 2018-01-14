@@ -1,5 +1,6 @@
 package com.codecool.service;
 
+import com.codecool.exceptions.ArgumentsSyntaxException;
 import com.codecool.model.CsvContainer;
 import com.codecool.model.ParsedArguments;
 import com.codecool.view.OutputFormatter;
@@ -19,7 +20,7 @@ public class SimpleCsvConverter {
         this.outputFormatterFactory = outputFormatterFactory;
     }
 
-    public void convert(ParsedArguments parsedArguments) throws FileNotFoundException {
+    public void convert(ParsedArguments parsedArguments) throws FileNotFoundException, ArgumentsSyntaxException {
         OutputFormatter outputFormatter = this.outputFormatterFactory.createByFormat(parsedArguments.getOutputFormat());
 
         List<String> lines = fileReader.readData(parsedArguments.getFile());

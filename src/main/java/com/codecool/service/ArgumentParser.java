@@ -1,6 +1,6 @@
 package com.codecool.service;
 
-import com.codecool.exceptions.InvalidArgumentsSyntaxException;
+import com.codecool.exceptions.ArgumentsSyntaxException;
 import com.codecool.model.OutputFormat;
 import com.codecool.model.ParsedArguments;
 
@@ -10,7 +10,7 @@ import java.util.List;
 public class ArgumentParser {
     private final String DEFAULT_DELIMITER = ",";
 
-    public ParsedArguments parseArgs(List<String> args) throws InvalidArgumentsSyntaxException {
+    public ParsedArguments parseArgs(List<String> args) throws ArgumentsSyntaxException {
         OutputFormat outputFormat;
         File file;
         Boolean hasHeaders;
@@ -18,7 +18,7 @@ public class ArgumentParser {
 
         switch (args.size()) {
             case 0:
-                throw new InvalidArgumentsSyntaxException("No input file defined!");
+                throw new ArgumentsSyntaxException("No input file defined!");
             case 1:
                 outputFormat = OutputFormat.TABLE;
                 file = getFile(args.get(0));
@@ -40,8 +40,12 @@ public class ArgumentParser {
         return new ParsedArguments(outputFormat, file, hasHeaders, delimiter);
     }
 
-    private OutputFormat getOutputFormat(String outputFormat) {
-        return OutputFormat.valueOf(outputFormat.toUpperCase());
+    private OutputFormat getOutputFormat(String outputFormat) throws ArgumentsSyntaxException {
+        try {
+            return OutputFormat.valueOf(outputFormat.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new ArgumentsSyntaxException("No such formatter: " + outputFormat);
+        }
     }
 
     private File getFile(String filePath) {
