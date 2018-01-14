@@ -8,12 +8,12 @@ import java.util.Scanner;
 
 public class FileReader {
     private List<String> lines;
-    public List<String> readData(File file) throws IOException {
+    public List<String> readData(File file) throws FileNotFoundException {
         this.lines = new LinkedList<>();
         if (file.exists() && file.canRead()) {
             loadLines(new Scanner(file));
         } else {
-            throw new FileNotFoundException(file.getPath());
+            throw new FileNotFoundException("File not found: " + file.getPath());
         }
 
         return this.lines;
