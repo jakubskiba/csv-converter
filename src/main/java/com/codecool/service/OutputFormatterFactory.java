@@ -1,6 +1,5 @@
 package com.codecool.service;
 
-import com.codecool.exceptions.ArgumentsSyntaxException;
 import com.codecool.model.OutputFormat;
 import com.codecool.view.JsonOutputFormatter;
 import com.codecool.view.OutputFormatter;
