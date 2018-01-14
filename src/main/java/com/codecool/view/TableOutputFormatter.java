@@ -27,19 +27,20 @@ public class TableOutputFormatter implements OutputFormatter {
 
         printSeparator(lineWidth);
 
-        printHeader(csvContainer);
-        printRows(csvContainer);
+        printHeader(csvContainer, cellWidth, lineWidth);
+        printRows(csvContainer, cellWidth);
 
         printSeparator(lineWidth);
     }
 
-    private void printRows(CsvContainer csvContainer) {
+    private void printRows(CsvContainer csvContainer, Integer cellWidth) {
         for(String[] row : csvContainer.getRows()) {
             printRow(Arrays.asList(row), cellWidth);
         }
     }
 
-    private void printHeader(CsvContainer csvContainer) {
+    private void printHeader(CsvContainer csvContainer, Integer cellWidth, Integer lineWidth) {
+        Boolean hasHeaders = csvContainer.getHeaders().size() > 0;
         if(hasHeaders){
             printRow(csvContainer.getHeaders(), cellWidth);
             printSeparator(lineWidth);
