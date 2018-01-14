@@ -5,14 +5,14 @@ import com.codecool.model.OutputFormat;
 import com.codecool.model.ParsedArguments;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArgumentParser {
+    private final String DEFAULT_DELIMITER = ",";
+
     public ParsedArguments parseArgs(List<String> args) throws InvalidArgumentsSyntaxException {
         OutputFormat outputFormat;
         File file;
-        List<String> otherArguments;
         Boolean hasHeaders;
         String delimiter;
 
@@ -22,17 +22,20 @@ public class ArgumentParser {
             case 1:
                 outputFormat = OutputFormat.TABLE;
                 file = getFile(args.get(0));
-                otherArguments = new ArrayList<>();
                 break;
             default:
                 outputFormat = getOutputFormat(args.get(0));
                 file = getFile(args.get(1));
-                otherArguments = args.subList(1, args.size());
                 break;
         }
 
-        hasHeaders = hasFlag(otherArguments, "-headers");
-        delimiter = ",";
+        hasHeaders = args.indexOf("-headers") > 0;
+
+        delimiter = DEFAULT_DELIMITER;
+        Integer indexOfDelimiterFlag = args.indexOf("-delimiter");
+        if(indexOfDelimiterFlag > 0 && args.size() >= indexOfDelimiterFlag + 1) {
+            delimiter = args.get(indexOfDelimiterFlag + 1);
+        }
 
         return new ParsedArguments(outputFormat, file, hasHeaders, delimiter);
     }
@@ -45,10 +48,4 @@ public class ArgumentParser {
         return new File(filePath);
     }
 
-    private boolean hasFlag(List<String> arguments, String flag) {
-        return arguments.stream()
-                        .filter(argument -> argument.equals(flag))
-                        .findAny()
-                        .isPresent();
-    }
 }
