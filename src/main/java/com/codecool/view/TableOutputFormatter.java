@@ -21,28 +21,41 @@ public class TableOutputFormatter implements OutputFormatter {
 
     @Override
     public void printToConsole(CsvContainer csvContainer) {
-        Boolean hasHeaders = csvContainer.getHeaders().size() > 0;
-
-        Integer cellAmount = hasHeaders ? csvContainer.getHeaders().size() : csvContainer.getRows().get(0).length;
-
-        Integer cellWidth = csvContainer.getRows().stream()
-                                                    .mapToInt(this::findMaxLength)
-                                                    .max()
-                                                    .getAsInt();
-
+        Integer cellAmount = getCellAmount(csvContainer);
+        Integer cellWidth = getCellWidth(csvContainer);
         Integer lineWidth = cellWidth * cellAmount + cellAmount;
 
         printSeparator(lineWidth);
+
+        printHeader(csvContainer);
+        printRows(csvContainer);
+
+        printSeparator(lineWidth);
+    }
+
+    private void printRows(CsvContainer csvContainer) {
+        for(String[] row : csvContainer.getRows()) {
+            printRow(Arrays.asList(row), cellWidth);
+        }
+    }
+
+    private void printHeader(CsvContainer csvContainer) {
         if(hasHeaders){
             printRow(csvContainer.getHeaders(), cellWidth);
             printSeparator(lineWidth);
         }
+    }
 
-        for(String[] row : csvContainer.getRows()) {
-            printRow(Arrays.asList(row), cellWidth);
-        }
+    private Integer getCellWidth(CsvContainer csvContainer) {
+        return csvContainer.getRows().stream()
+                                    .mapToInt(this::findMaxLength)
+                                    .max()
+                                    .getAsInt();
+    }
 
-        printSeparator(lineWidth);
+    private Integer getCellAmount(CsvContainer csvContainer) {
+        Boolean hasHeaders = csvContainer.getHeaders().size() > 0;
+        return hasHeaders ? csvContainer.getHeaders().size() : csvContainer.getRows().get(0).length;
     }
 
     private void printSeparator(int size) {
