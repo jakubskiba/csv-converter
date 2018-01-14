@@ -1,10 +1,7 @@
 package com.codecool.service;
 
-import com.codecool.model.CsvContainer;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
